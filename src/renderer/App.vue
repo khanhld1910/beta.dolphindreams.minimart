@@ -1,56 +1,19 @@
 <template>
 	<div id="app" class="wrapper">
-		<header class="main-header">
-			<router-link to='/' class="logo">
-				<span class="logo-mini">
-					<i class="fa fa-shopping-basket"></i>
-				</span>
-				<span class="logo-lg">
-					SUPERMART
-				</span>
-			</router-link>
-			<nav class="navbar navbar-static-top">
-				<a class="sidebar-toggle" data-toggle="offcanvas" role="button">
-					<span class="sr-only">Toggle navigation</span>
-				</a>
-			</nav>
-		</header>
-		<aside class="main-sidebar">
-			<section class="sidebar">
-				<ul class="sidebar-menu">
-					<li class="header">MAIN NAVIGATION</li>
-					<router-link to="/" tag="li" active-class="active" exact>
-						<a>
-							<i class="fa fa-dashboard"></i>
-							<span>Dashboard</span>
-						</a>
-					</router-link>
-					<router-link to="/product" tag="li" active-class="active" exact>
-						<a>
-							<i class="fa fa-calendar"></i>
-							<span>Product</span>
-						</a>
-					</router-link>
-				</ul>
-			</section>
-		</aside>
-		<div class="content-wrapper">
-			<router-view></router-view>
-		</div>
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<kbd>1.0.0@beta1</kbd>
-			</div>
-			<code><i class="fa fa-code"></i> with <i class="fa fa-heartbeat"></i> by </code> <strong>Dolphin Dreams</strong>
-		</footer>
+		<router-view name="header"></router-view>
+		<router-view name="sidebar"></router-view>
+		<router-view name="content"></router-view>
+		<router-view name="footer"></router-view>
+		<router-view name="modal"></router-view>
 	</div>
 </template>
 
 <script>
+import * as $ from 'jquery'
 export default {
-	created() {
+	created: function () {
 		$('body').attr('class', 'sidebar-mini fixed wysihtml5-supported skin-green')
-	},
+	}
 }
 </script>
 
@@ -80,5 +43,36 @@ button>*:hover {
 
 .main-header .logo {
 	font-family: 'Source Sans Pro', sans-serif;
+}
+
+.content-wrapper {
+	padding-bottom: 51px !important;
+}
+
+.main-footer {
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	z-index: 999;
+}
+
+.modal {
+	text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+	.modal:before {
+		display: inline-block;
+		vertical-align: middle;
+		content: " ";
+		height: 100%;
+	}
+}
+
+.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
 }
 </style>

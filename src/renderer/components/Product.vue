@@ -1,72 +1,61 @@
 <template>
-	<div class="content">
-		<div class="box">
-			<div class="box-header with-border">
-				<div class="box-title">123123</div>
+	<div class="nav-tabs-custom">
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="#product" data-toggle="tab">Danh sách hàng</a>
+			</li>
+			<li>
+				<a href="#unit" data-toggle="tab">Đơn vị hàng</a>
+			</li>
+			<li>
+				<a href="#supplier" data-toggle="tab">Nhà cung cấp</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="product">
+				<ProductList></ProductList>
 			</div>
-			<div class="box-body no-padding">
-				<table class="table table-bordered">
-					<tbody>
-						<tr>
-							<th>ID</th>
-							<th>Ten</th>
-							<th></th>
-						</tr>
-						<tr v-for="item in allProducts">
-							<td>ID</td>
-							<td v-text="item.name"></td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
+			<div class="tab-pane" id="unit">
+				<UnitList
+					v-bind='units'
+					@clickDeleteUnitBtn="deleteUnit">
+				</UnitList>
+			</div>
+			<div class="tab-pane" id="supplier">
+				<SupplierList></SupplierList>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import ProductList from './Product/ProductList.vue'
+import UnitList from './Product/UnitList.vue'
+import SupplierList from './Product/SupplierList.vue'
 
 export default {
-	data() {
-		return {
-			ref: null,
-			allProducts: [],
-		}
+	components: {
+		ProductList,
+		UnitList,
+		SupplierList
 	},
 	created() {
-		// do database cua google no su dung socket nen moi thu deu la realtime ca
-		// ví dụ t với m cùng mở 1 phần mềm trên 2 máy tính khác nhau. m thêm sản phẩm thì bên t cũng lập tức
-		// có luôn.uh
-		this.$data.ref = this.$firebase.database().ref('/products')
-		// hàm on để lắng nghe mọi dữ liệu từ products
-		// nếu k muốn nó lắng nghe mà chỉ lấy một lần duy nhất thì dùng once
-		// vậy là nó k lắng nghe nữa.
-		// bữa nay mắt t mờ vl. cắt 1 cặp kính bao nhiêu nhỉ
-		// kinh 200 gong 3-400 re tien
-		// cuoi tuan co gi di vs t oh
-		// dinh lam gi quen me r
-		// ma app nay co nhung table nao
-		// san pham hoa don 
-		// tao cung ko biet phai tham khao them
-		// lam demo vai chuc nang xem ng ta vua y ko da roi moi lam hoan toan
-		// chac lam san pham voi kho hang truoc thoi
-		// thoi cu de tao mo di
-		// cai phan mem 
-		this.$data.ref.on('value', (snapshot) => {
-			this.$data.allProducts = snapshot.val()
-		})
+		this.$store.dispatch('getUnits')
+	},
+	computed: {
+		units() {
+			return this.$store.state.unit.all
+		}
 	},
 	methods: {
-		test() {
-			var data = {
-				name: 'testtttt'
-			}
-			this.$data.ref.push(data)
+		deleteUnit(data, e) {
+			//alert(data)
 		}
 	}
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
+

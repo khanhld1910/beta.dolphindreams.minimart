@@ -1,6 +1,6 @@
 <template>
 	<div>
-		-------------------------------------
+		adasdas
 	</div>
 </template>
 
@@ -9,6 +9,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
+
